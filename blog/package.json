@@ -1,0 +1,19 @@
+{
+  "name": "blog",
+  "version": "0.0.1-alpha",
+  "description": "teaster project",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"con me may\""
+  },
+  "keywords": [
+    "test",
+    "teaster",
+    "node",
+    "blog",
+    "demo",
+    "alpha"
+  ],
+  "author": "linoxolus",
+  "license": "GPL-3.0"
+}
