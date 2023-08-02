@@ -18,7 +18,8 @@
   "author": "linoxolus",
   "license": "GPL-3.0",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.1"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
