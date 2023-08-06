@@ -8,8 +8,10 @@ const path = require('path');
 const app = express();
 const port = 2008; 
 
-// Config static file
+// Config use
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.urlencoded());
+app.use(express.json());
 
 // Config view engine
 app.engine('.hbs', engine({extname: '.hbs'}));
@@ -27,6 +29,11 @@ app.get('/news', (req, res) => {
 app.get('/search', (req, res) => {
     console.log(req.query)
     res.render('search');
+})
+
+app.post('/search', (req, res) => {
+    console.log(req.body)
+    res.send(`No target matched for: "${req.body.q}"`);
 })
 
 app.listen(port, () => {
