@@ -9,7 +9,7 @@ const app = express();
 const port = 2008; 
 
 // Config static file
-app.use(express.static(path.join(__dirname, 'resources', 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Config view engine
 app.engine('.hbs', engine({extname: '.hbs'}));
