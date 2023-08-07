@@ -5,10 +5,14 @@ class SearchController {
     };
 
     //[POST] /search
-    post(req, res) {
-      console.log(req.body);
+    post(req, res, next) {
       res.send(`No target matched for: "${req.body.q}"`);
     }
+
+    // [GET] /search/:slug
+    show(req, res, next, id) {
+    }
+
 };
 
 module.exports = new SearchController;
