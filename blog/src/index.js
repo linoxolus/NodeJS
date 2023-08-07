@@ -5,7 +5,6 @@ const path = require('path');
 
 // Import library
 const route = require('./routes');
-const exp = require('constants');
 
 // Declaration variable
 const app = express();
