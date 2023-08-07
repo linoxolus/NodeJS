@@ -24,6 +24,6 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 route(app);
 
 app.listen(port, () => {
-  console.clear();
-  console.log(`Open WebServer Success at: http://localhost:${port}`);
+    console.clear();
+    console.log(`Open WebServer Success at: http://localhost:${port}`);
 });

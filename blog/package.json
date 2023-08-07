@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "node-sass --watch src/resources/scss/ -o src/public/css/",
     "start": "nodemon src/index.html --inspect",
-    "format":"prettier --write --single-quote --trailing-comma all 'src/**/*.{js, json, scss}'"
+    "format": "lint-staged"
   },
   "keywords": [
     "test",
@@ -16,6 +16,9 @@
     "demo",
     "alpha"
   ],
+  "lint-staged": {
+    "src/**/*.{js, json, scss}": "prettier --write --single-quote --trailing-comma all --tab-width 4"
+  },
   "author": "linoxolus",
   "license": "GPL-3.0",
   "dependencies": {
