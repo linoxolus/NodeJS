@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "watch": "node-sass --watch src/resources/scss/ -o src/public/css/",
-    "start": "nodemon src/index.html --inspect"
+    "start": "nodemon src/index.html --inspect",
+    "format":"prettier --write --single-quote --trailing-comma all 'src/**/*.{js, json, scss}'"
   },
   "keywords": [
     "test",
