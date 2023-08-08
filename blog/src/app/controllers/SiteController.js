@@ -1,7 +1,18 @@
+const News = require('../models/news.model');
+const { mongoosesToObject } = require('../../utils/mongoose.utils');
+
 class SiteController {
     // [GET] /
     index(req, res, next) {
-        res.render('home');
+        News.find({})
+            .then((newses) => {
+                res.render('home', {
+                    newses: mongoosesToObject(newses),
+                });
+            })
+            .catch(next);
+
+        // res.render('home');
     }
 }
 

@@ -1,1 +1,23 @@
-<h2>test hbs</h2>
+<div id='content' class='mt-4'>
+    <div class='row'>
+        {{#each newses}}
+            <div class='col-sm-6 col-lg-4'>
+                <a href='/news/{{this.slug}}' class='new-link' style="text-decoration: none;">
+                    <div class='card' style='width: 18rem;'>
+                        <img
+                            src='{{this.image}}'
+                            class='card-img-top'
+                            alt='...'
+                        />
+                        <div class='card-body'>
+                          <a href='/news/{{this.slug}}' class='new-link' style="text-decoration: none;">
+                            <h5 class='card-title'>{{this.name}}</h5>
+                          </a>
+                            <p class='card-text'>{{this.description}}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {{/each}}
+    </div>
+</div>

@@ -5,6 +5,10 @@ const path = require('path');
 
 // Import library
 const route = require('./routes');
+const db = require('./config/db/');
+
+// Connect to DB
+db.connect();
 
 // Declaration variable
 const app = express();
