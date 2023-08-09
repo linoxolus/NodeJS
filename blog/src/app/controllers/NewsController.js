@@ -1,6 +1,8 @@
 const news = require('../models/news.model');
 const { mongooseToObject } = require('../../utils/mongoose.utils');
 const { mongoosesToObject } = require('../../utils/mongoose.utils');
+const { idToMongooseId } = require('../../utils/mongoose.utils');
+
 class NewsController {
     // [GET] /news/:slug
     show(req, res, next) {
@@ -58,7 +60,7 @@ class NewsController {
         news.deleteOne({
             _id: req.params.id,
         })
-            .then(() => res.redirect('/news/list/'))
+            .then(() => res.send('success'))
             .catch(next);
     }
 }
