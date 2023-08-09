@@ -2,6 +2,7 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
 const path = require('path');
+const methodOverride = require('method-override');
 
 // Import library
 const route = require('./routes');
@@ -18,6 +19,7 @@ const port = 2008;
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded());
 app.use(express.json());
+app.use(methodOverride('_method'));
 
 // Config view engine
 app.engine('.hbs', engine({ extname: '.hbs' }));

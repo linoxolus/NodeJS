@@ -1,56 +1,57 @@
 <div class='mt-4'>
-    <h3>Upload News</h3>
-    <form method='post' action='/news/store'>
+    <h3>Edit News</h3>
+    <form method='post' action='/news/{{news/_id}}?_method=PUT'>
         <div class='mb-3'>
             <label for='title' class='form-label'>Title:</label>
             <input
+                value='{{news.title}}'
                 type='text'
                 class='form-control'
                 id='title'
                 name='title'
-                aria-describedby='emailHelp'
+                aria-describedby='title'
             />
         </div>
         <div class='mb-3'>
             <label for='description' class='form-label'>Description: </label>
-            <input
-                type='text'
+            <textarea
                 class='form-control'
                 id='description'
                 name='description'
-                aria-describedby='emailHelp'
-            />
+                aria-describedby='description'
+            >{{news.description}}</textarea>
         </div>
         <div class='mb-3'>
             <label for='image' class='form-label'>Image link:</label>
             <input
+                value='{{news.image}}'
                 type='text'
                 class='form-control'
                 id='image'
-                name="image"
-                aria-describedby='emailHelp'
+                name='image'
+                aria-describedby='image'
             />
         </div>
         <div class='mb-3'>
             <label for='content' class='form-label'>Content:</label>
-            <input
-                type='text'
+            <textarea
                 class='form-control'
                 id='content'
                 name='content'
-                aria-describedby='emailHelp'
-            />
+                aria-describedby='content'
+            >{{news.content}}</textarea>
         </div>
         <div class='mb-3'>
             <label for='slug' class='form-label'>Slug:</label>
             <input
+                value='{{news.slug}}'
                 type='text'
                 class='form-control'
                 id='slug'
                 name='slug'
-                aria-describedby='emailHelp'
+                aria-describedby='slug'
             />
         </div>
-        <button type='submit' class='btn btn-primary'>Upload</button>
+        <button type='submit' class='btn btn-primary'>Save</button>
     </form>
 </div>

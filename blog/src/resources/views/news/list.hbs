@@ -1,0 +1,49 @@
+<div class='mt-4'>
+    <table class='table'>
+        <thead>
+            <tr style="text-align: center;">
+                <th scope='col'>#</th>
+                <th scope='col'>Slug</th>
+                <th scope='col'>Image</th>
+                <th scope='col'></th>
+            </tr>
+        </thead>
+        <tbody style="vertical-align: middle;">
+            {{#each news}}
+            <tr style="text-align: center;">
+                <th scope='row'>{{@index}}</th>
+                <td>{{this.slug}}</td>
+                <td>
+                    <img src="{{this.image}}" alt="image" style="height: 50px; border-radius: 5px;">
+                </td>
+                <td>
+                    <a href="/news/{{this._id}}/edit" class="btn btn-primary">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteConfirm">Delete</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- Delete Confirm --}}
+
+<div class="modal" tabindex="-1" id="deleteConfirm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Confirm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Delete News?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
