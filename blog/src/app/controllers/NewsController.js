@@ -1,7 +1,6 @@
 const news = require('../models/news.model');
 const { mongooseToObject } = require('../../utils/mongoose.utils');
 const { mongoosesToObject } = require('../../utils/mongoose.utils');
-const { idToMongooseId } = require('../../utils/mongoose.utils');
 
 class NewsController {
     // [GET] /news/:slug
@@ -36,7 +35,7 @@ class NewsController {
 
     // [GET] /news/:id/edit
     edit(req, res, next) {
-        news.findById(req.params.id)
+        news.findOneWithDeleted({ _id: req.params.id })
             .then((news) =>
                 res.render('news/edit', { news: mongooseToObject(news) }),
             )
@@ -57,10 +56,42 @@ class NewsController {
 
     // [DELETE] /news/:id
     delete(req, res, next) {
-        news.deleteOne({
+        news.delete({
             _id: req.params.id,
         })
             .then(() => res.send('success'))
+            .catch(next);
+    }
+
+    // [DELETE] /news/:id/hardDelete
+    hardDelete(req, res, next) {
+        news.delete({
+            _id: req.params.id,
+        })
+            .then(() => res.send('success'))
+            .catch(next);
+    }
+
+    // [Restore] /news/:id/restore
+    restore(req, res, next) {
+        console.log();
+        news.restore({
+            _id: req.params.id,
+        })
+            .then(() => res.send('success'))
+            .catch(next);
+    }
+
+    // [GET] /news/trash
+    trash(req, res, next) {
+        news.findDeleted({})
+            .then((newses) => {
+                res.render('news/trash', {
+                    news: mongoosesToObject(newses).filter(
+                        (news) => news.deleted,
+                    ),
+                });
+            })
             .catch(next);
     }
 }

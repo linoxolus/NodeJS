@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const mongooseDelete = require('mongoose-delete');
+
 const Schema = mongoose.Schema;
 
 const News = new Schema({
@@ -9,6 +11,11 @@ const News = new Schema({
     slug: { type: String },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
+});
+
+News.plugin(mongooseDelete, {
+    overrideMethods: 'all',
+    deletedAt: true,
 });
 
 module.exports = mongoose.model('oaks', News);

@@ -1,7 +1,7 @@
 <div class='mt-4'>
   <div>
-    <h3>News List</h3>
-    <a href="/news/list/trash">Trash</a>
+    <h3>News Trash</h3>
+    <a href="/news/list">List</a>
   </div>
     <table class='table'>
         <thead>
@@ -23,18 +23,15 @@
                     </a>
                 </td>
                 <td>
+                  <span data-bs-id="{{this._id}}" class="btn btn-primary restore">Restore</span>
                     <a href="/news/{{this._id}}/edit" class="btn btn-primary">Edit</a>
-                </td>
-                <td>
-                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteConfirm">Delete</a>
+                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteConfirm">Hard Delete</a>
                 </td>
             </tr>
 
             {{else}}
             <td colspan="4" style="text-align: center; vertical-align: middle;">
-            <p style="margin: 0;">0 News
-            <br>
-            Upload New News: <a href="/news/upload">Upload</a>
+            <p style="margin: 0;">Trash Is Empty
             </p>
             </td>
             {{/each}}
@@ -75,9 +72,10 @@ if (modal) {
   })
 }
 var btnDeleteNews = document.querySelector('.btn-danger');
+var btnRestoreNews = document.querySelectorAll('.restore');
 
 function deleteNews() {
-    fetch(`/news/${id}`, {
+    fetch(`/news/${id}/hardDelete`, {
         method: "DELETE",
         body: null,
         headers: {
@@ -89,5 +87,19 @@ function deleteNews() {
 }
 
 btnDeleteNews.onclick = deleteNews;
+for(i = 0; i < btnRestoreNews.length; i++) {
+  btnRestoreNews[i].onclick = (e) => {
+    console.log(`/news/${e.target.getAttribute('data-bs-id')}/restore`);
+    fetch(`/news/${e.target.getAttribute('data-bs-id')}/restore`, {
+        method: "PATCH",
+        body: null,
+        headers: {
+        "Content-type": "application/json"
+        }
+    })
+    .then(() => location.reload())
+    .catch(() => console.log('bug!!!'));
+};
+};
 
 </script>
