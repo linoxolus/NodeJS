@@ -65,7 +65,7 @@ class NewsController {
 
     // [DELETE] /news/:id/hardDelete
     hardDelete(req, res, next) {
-        news.delete({
+        news.deleteOne({
             _id: req.params.id,
         })
             .then(() => res.send('success'))
@@ -84,13 +84,9 @@ class NewsController {
 
     // [GET] /news/trash
     trash(req, res, next) {
-        news.findDeleted({})
+        news.findWithDeleted({ deleted: true })
             .then((newses) => {
-                res.render('news/trash', {
-                    news: mongoosesToObject(newses).filter(
-                        (news) => news.deleted,
-                    ),
-                });
+                res.render('news/trash', { news: mongoosesToObject(newses) });
             })
             .catch(next);
     }
