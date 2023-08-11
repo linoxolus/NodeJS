@@ -26,11 +26,15 @@ class NewsController {
 
     // [GET] /news/list
     list(req, res, next) {
-        news.find({})
-            .then((news) => {
-                res.render('news/list', { news: mongoosesToObject(news) });
-            })
-            .catch(next);
+        Promise.all([
+            news.find({}),
+            news.countDocumentsWithDeleted({ deleted: true }),
+        ]).then(([news, deletedCount]) => {
+            res.render('news/list', {
+                news: mongoosesToObject(news),
+                deletedCount,
+            });
+        });
     }
 
     // [GET] /news/:id/edit
@@ -84,10 +88,16 @@ class NewsController {
 
     // [GET] /news/trash
     trash(req, res, next) {
-        news.findWithDeleted({ deleted: true })
-            .then((newses) => {
-                res.render('news/trash', { news: mongoosesToObject(newses) });
-            })
+        Promise.all([
+            news.findWithDeleted({ deleted: true }),
+            news.countDocuments(),
+        ])
+            .then(([newses, newsCount]) =>
+                res.render('news/trash', {
+                    news: mongoosesToObject(newses),
+                    newsCount,
+                }),
+            )
             .catch(next);
     }
 }

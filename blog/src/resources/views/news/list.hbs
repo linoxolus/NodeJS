@@ -1,93 +1,182 @@
 <div class='mt-4'>
-  <div>
-    <h3>News List</h3>
-    <a href="/news/list/trash">Trash</a>
-  </div>
+    <div>
+        <h3>News List</h3>
+        <a href='/news/list/trash'>Trash ({{deletedCount}})</a>
+        <div class='mt-4 d-flex align-items-center justify-content-between'>
+            <div class='form-check'>
+                <input
+                    class='form-check-input'
+                    type='checkbox'
+                    value=''
+                    id='checkboxAll'
+                />
+                <label class='form-check-label' for='checkboxAll'>
+                    Select All
+                </label>
+            </div>
+
+            <select
+                class='form-select form-select-sm'
+                style='width: 50vw;'
+                aria-label='Default select example'
+            >
+                <option selected>--- Method ----</option>
+                <option value='delete'>Delete</option>
+            </select>
+
+            <button class='btn btn-primary btn-sm disabled applyBtn'>Apply</button>
+
+        </div>
+    </div>
     <table class='table'>
         <thead>
-            <tr style="text-align: center;">
+            <tr style='text-align: center;'>
+                <th scope='col'></th>
                 <th scope='col'>#</th>
                 <th scope='col'>Slug</th>
                 <th scope='col'>Image</th>
                 <th scope='col'></th>
+                <th scope='col'></th>
             </tr>
         </thead>
-        <tbody style="vertical-align: middle;">
+        <tbody style='vertical-align: middle;'>
             {{#each news}}
-            <tr style="text-align: center;">
-                <th scope='row'>{{@index}}</th>
-                <td>{{this.slug}}</td>
-                <td>
-                    <a href="/news/{{this.slug}}">
-                    <img src="{{this.image}}" alt="image" style="height: 50px; border-radius: 5px;">
-                    </a>
-                </td>
-                <td>
-                    <a href="/news/{{this._id}}/edit" class="btn btn-primary">Edit</a>
-                </td>
-                <td>
-                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-id="{{this._id}}" data-bs-target="#deleteConfirm">Delete</a>
-                </td>
-            </tr>
+                <tr style='text-align: center;'>
+                    <th>
+                        <div class='form-check'>
+                            <input class='form-check-input' type='checkbox' value='{{this._id}}' name="newsIds[]"/>
+                        </div>
+                    </th>
+                    <th scope='row'>{{@index}}</th>
+                    <td>{{this.slug}}</td>
+                    <td>
+                        <a href='/news/{{this.slug}}'>
+                            <img
+                                src='{{this.image}}'
+                                alt='image'
+                                style='height: 50px; border-radius: 5px;'
+                            />
+                        </a>
+                    </td>
+                    <td>
+                        <a
+                            href='/news/{{this._id}}/edit'
+                            class='btn btn-primary'
+                        >Edit</a>
+                    </td>
+                    <td>
+                        <a
+                            href='#'
+                            class='btn btn-primary'
+                            data-bs-toggle='modal'
+                            data-bs-id='{{this._id}}'
+                            data-bs-target='#deleteConfirm'
+                        >Delete</a>
+                    </td>
+                </tr>
 
             {{else}}
-            <td colspan="4" style="text-align: center; vertical-align: middle;">
-            <p style="margin: 0;">0 News
-            <br>
-            Upload New News: <a href="/news/upload">Upload</a>
-            </p>
-            </td>
+                <td
+                    colspan='4'
+                    style='text-align: center; vertical-align: middle;'
+                >
+                    <p style='margin: 0;'>0 News
+                        <br />
+                        Upload New News:
+                        <a href='/news/upload'>Upload</a>
+                    </p>
+                </td>
             {{/each}}
         </tbody>
     </table>
 </div>
 
-{{!-- Delete Confirm --}}
+{{! Delete Confirm }}
 
-<div class="modal" tabindex="-1" id="deleteConfirm">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Confirm</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Delete News?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">Delete</button>
-      </div>
+<div class='modal' tabindex='-1' id='deleteConfirm'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Delete Confirm</h5>
+                <button
+                    type='button'
+                    class='btn-close'
+                    data-bs-dismiss='modal'
+                    aria-label='Close'
+                ></button>
+            </div>
+            <div class='modal-body'>
+                <p>Delete News?</p>
+            </div>
+            <div class='modal-footer'>
+                <button
+                    type='button'
+                    class='btn btn-secondary'
+                    data-bs-dismiss='modal'
+                >Close</button>
+                <button type='button' class='btn btn-danger'>Delete</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-{{!-- Modal handler --}}
+{{! Modal handler }}
 
 <script>
-    var id = '';
-    const modal = document.getElementById('deleteConfirm')
+var id = '';
+const modal = document.getElementById('deleteConfirm') 
 if (modal) {
-  modal.addEventListener('show.bs.modal', event => {
-    const button = event.relatedTarget
-    const recipient = button.getAttribute('data-bs-id')
-    id = recipient;
-  })
+    modal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const recipient = button.getAttribute('data-bs-id');
+        id = recipient;
+    })
 }
 var btnDeleteNews = document.querySelector('.btn-danger');
+var checkboxAll = document.querySelector('#checkboxAll');
+var newsCheckboxs = document.querySelectorAll('input[name="newsIds[]"]');
+var applyButton = document.querySelector('.applyBtn');
+
+renderApplyButton();
 
 function deleteNews() {
     fetch(`/news/${id}`, {
         method: "DELETE",
         body: null,
         headers: {
-        "Content-type": "application/json"
+            "Content-type": "application/json"
         }
-    })
-    .then(() => location.reload())
-    .catch(() => console.log('bug!!!'));
+    }).then(() => location.reload()).catch(() => console.log('bug!!!'));
 }
 
 btnDeleteNews.onclick = deleteNews;
+checkboxAll.onchange = (e) => {
+  var isChecked = e.target.checked;
+  for(i = 0; i < newsCheckboxs.length; i++) {
+  newsCheckboxs[i].checked = isChecked
+  }
+  renderApplyButton();
+}
+for(i = 0; i < newsCheckboxs.length; i++) {
+  newsCheckboxs[i].onchange = (e) => {
+    var isCheckedAll = newsCheckboxs.length === document.querySelectorAll('input[name="newsIds[]"]:checked').length;
+    isCheckedAll ? checkboxAll.checked = true : checkboxAll.checked = false;
+    renderApplyButton();
+  }
+}
 
+function renderApplyButton() {
+  var checkedCount = document.querySelectorAll('input[name="newsIds[]"]:checked').length;
+  if (checkedCount) {
+    applyButton.classList.remove('disabled');
+    applyButton.addEventListener('click', postApply);
+  } else {
+    applyButton.classList.add('disabled');
+    applyButton.removeEventListener('click', postApply);
+    };
+}
+
+function postApply(e) {
+  
+}
 </script>
