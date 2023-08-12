@@ -100,6 +100,37 @@ class NewsController {
             )
             .catch(next);
     }
+
+    // [POST] /news/handleSelectAction
+    handleSelectAction(req, res, next) {
+        switch (req.body.action) {
+            case 'delete':
+                news.delete({
+                    _id: { $in: req.body.newsIds },
+                })
+                    .then(() => res.send('success'))
+                    .catch(next);
+                break;
+
+            case 'restore':
+                news.restore({
+                    _id: { $in: req.body.newsIds },
+                })
+                    .then(() => res.send('success'))
+                    .catch(next);
+                break;
+
+            case 'hardDelete':
+                news.deleteOne({
+                    _id: { $in: req.body.newsIds },
+                })
+                    .then(() => res.send('success'))
+                    .catch(next);
+                break;
+            default:
+                console.log('bug!!!');
+        }
+    }
 }
 
 module.exports = new NewsController();

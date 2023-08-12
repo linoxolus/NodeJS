@@ -18,10 +18,12 @@
             <select
                 class='form-select form-select-sm'
                 style='width: 50vw;'
-                aria-label='Default select example'
+                aria-label='Default select example',
+                name="action"
+                id="action"
+                required
             >
-                <option selected>--- Method ----</option>
-                <option value='delete'>Delete</option>
+                <option selected value='delete'>Delete</option>
             </select>
 
             <button class='btn btn-primary btn-sm disabled applyBtn'>Apply</button>
@@ -136,6 +138,7 @@ var btnDeleteNews = document.querySelector('.btn-danger');
 var checkboxAll = document.querySelector('#checkboxAll');
 var newsCheckboxs = document.querySelectorAll('input[name="newsIds[]"]');
 var applyButton = document.querySelector('.applyBtn');
+var actionSelector = document.querySelector("#action");
 
 renderApplyButton();
 
@@ -177,6 +180,23 @@ function renderApplyButton() {
 }
 
 function postApply(e) {
-  
+    var checkedCheckboxs = document.querySelectorAll('input[name="newsIds[]"]:checked');
+    var newsIds = Array.from(checkedCheckboxs).map(checkedCheckbox => checkedCheckbox.value);
+
+    fetch(`/news/handleSelectAction`, {
+        method: "POST",
+        body: JSON.stringify({
+            action: actionSelector.value,
+            newsIds,
+        }),
+        headers: {
+            "Content-type": "application/json"
+        }
+    })
+    .then(res => {
+        console.log(res)
+        location.reload();
+        })
+    .catch(() => console.log('bug!!!'));
 }
 </script>

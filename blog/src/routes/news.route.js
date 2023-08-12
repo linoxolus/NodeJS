@@ -6,6 +6,7 @@ router.post('/store', newsController.store);
 router.get('/list', newsController.list);
 router.get('/list/trash', newsController.trash);
 router.get('/upload', newsController.upload);
+router.post('/handleSelectAction', newsController.handleSelectAction);
 router.get('/:slug', newsController.show);
 router.get('/:id/edit', newsController.edit);
 router.delete('/:id', newsController.delete);
