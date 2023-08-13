@@ -1,3 +1,4 @@
 [submodule "KaiChat"]
 	path = KaiChat
-	url = ./KaiChat
+	url = https://github.com/linoxolus/KaiChat
+
