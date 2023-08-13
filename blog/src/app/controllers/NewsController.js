@@ -26,8 +26,16 @@ class NewsController {
 
     // [GET] /news/list
     list(req, res, next) {
+        var newsQuery = news.find({});
+
+        if (req.query.hasOwnProperty('sort')) {
+            newsQuery = newsQuery.sort({
+                [req.query.column]: req.query.type,
+            });
+        }
+
         Promise.all([
-            news.find({}),
+            newsQuery,
             news.countDocumentsWithDeleted({ deleted: true }),
         ]).then(([news, deletedCount]) => {
             res.render('news/list', {
