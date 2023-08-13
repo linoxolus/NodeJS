@@ -2,3 +2,6 @@
 	path = KaiChat
 	url = https://github.com/linoxolus/KaiChat
 
+[submodule "kai-gallery"]
+	path = kai-gallery
+	url = https://github.com/linoxolus/kai-gallery
