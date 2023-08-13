@@ -19,9 +19,19 @@ class NewsController {
 
     // [POST] /news/store
     store(req, res, next) {
-        news.create(req.body)
-            .then(() => res.redirect(`/news/${req.body.slug}`))
-            .catch(next);
+        news.findOne({})
+            .sort({ _id: 'desc' })
+            .then((latestNews) => {
+                if (latestNews?._id) {
+                    req.body._id = latestNews._id + 1;
+                } else {
+                    req.body._id = 1;
+                }
+
+                news.create(req.body)
+                    .then(() => res.redirect(`/news/${req.body.slug}`))
+                    .catch(next);
+            });
     }
 
     // [GET] /news/list
