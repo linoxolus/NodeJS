@@ -1,0 +1,3 @@
+[submodule "KaiChat"]
+	path = KaiChat
+	url = ./KaiChat
